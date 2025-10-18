@@ -1,0 +1,113 @@
+#include <stdio.h> 
+#include <string.h> 
+#define MAX_BOOKS 100 
+struct Book { 
+char title[50]; 
+char author[50]; 
+}; 
+struct Lib { 
+struct Book books[MAX_BOOKS]; 
+int count; 
+}; 
+void addBookinfo(struct Lib *lib, const char *title, const char *author); 
+void displayBooksinfo(struct Lib *lib); 
+void listBooksByAuthor(struct Lib *lib, const char *author); 
+void listBookCount(struct Lib *lib); 
+int main() { 
+struct Lib lib = { .count = 10 }; 
+strcpy(lib.books[0].title, "The_Alchemist"); 
+strcpy(lib.books[0].author, "Paulo_Coelho"); 
+strcpy(lib.books[1].title, "Harry_Potter_and_the_Philosopher's_Stone"); 
+strcpy(lib.books[1].author, "J.K._Rowling"); 
+strcpy(lib.books[2].title, "The_Lord_of_the_Rings"); 
+strcpy(lib.books[2].author, "J.R.R._Tolkien"); 
+strcpy(lib.books[3].title,"Aventures_of_Tom_Sawyer"); 
+strcpy(lib.books[3].author,"Mark_Twain"); 
+strcpy(lib.books[4].title,"Alice_in_Wonderland"); 
+strcpy(lib.books[4].author,"Lewis_Caroll"); 
+strcpy(lib.books[5].title,"Death_Note"); 
+strcpy(lib.books[5].author,"Tsugumi_Ohba"); 
+strcpy(lib.books[6].title,"Attack_On_Titan"); 
+strcpy(lib.books[6].author,"Hajime_Isayama"); 
+strcpy(lib.books[7].title,"The_Silent_Cry"); 
+strcpy(lib.books[7].author,"Kenzaburo Oe"); 
+strcpy(lib.books[8].title,"The_Guide"); 
+strcpy(lib.books[8].author,"R.K_Narayan"); 
+strcpy(lib.books[9].title,"IQ84"); 
+strcpy(lib.books[9].author,"Haruki_Murakami"); 
+int ch; 
+char title[50], author[50]; 
+do { 
+printf("\nLibrary Management System Menu:\n"); 
+printf("1. Add book\n"); 
+printf("2. Display all books\n"); 
+printf("3. List books by author\n"); 
+printf("4. List total book count\n"); 
+printf("0. Exit\n"); 
+printf("Enter your choice: "); 
+scanf("%d", &ch); 
+switch (ch) { 
+case 1: 
+printf("Enter book title with underscores as spaces: "); 
+scanf("%s", title); 
+printf("Enter author name by taking underscores as spaces: "); 
+scanf("%s", author); 
+addBookinfo(&lib, title, author); 
+break; 
+case 2: 
+displayBooksinfo(&lib); 
+break; 
+case 3: 
+printf("Enter author name by taking underscores as spaces: "); 
+scanf("%s", author); 
+listBooksByAuthor(&lib, author); 
+break; 
+case 4: 
+listBookCount(&lib); 
+break; 
+case 0: 
+printf("Exiting program. Goodbye!\n"); 
+break; 
+default: 
+printf("Invalid choice. Please enter a valid option.\n"); 
+} 
+} while (ch != 0); 
+return 0; 
+} 
+void addBookinfo(struct Lib *lib, const char *title, const char *author) { 
+if (lib->count < MAX_BOOKS) { 
+strcpy(lib->books[lib->count].title, title); 
+strcpy(lib->books[lib->count].author, author); 
+lib->count++; 
+printf("Book added successfully. Total books in the library: %d\n", lib->count); 
+} else { 
+printf("Library is full. Cannot add more books.\n"); 
+} 
+} 
+void displayBooksinfo(struct Lib *lib) { 
+if (lib->count == 0) { 
+printf("Library is empty.\n"); 
+} else { 
+printf("Books in the Library:\n"); 
+for (int i = 0; i < lib->count; ++i) { 
+printf("%d. %s by %s\n", i + 1, lib->books[i].title, lib->books[i].author); 
+} 
+} 
+} 
+void listBooksByAuthor(struct Lib *lib, const char *author) { 
+int found = 0; 
+printf("Books by %s:\n", author); 
+for (int i = 0; i < lib->count; ++i) { 
+if (strcmp(lib->books[i].author, author) == 0) { 
+printf("%s\n", lib->books[i].title); 
+found = 1; 
+} 
+} 
+if (!found) { 
+printf("No books found by %s.\n", author); 
+} 
+} 
+void listBookCount(struct Lib *lib) { 
+printf("Total books in the library: %d\n", lib->count); 
+} 
+
